@@ -5,8 +5,7 @@ namespace Database\Factories;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CategoryFactory extends Factory
-{
+class CategoryFactory extends Factory {
     /**
      * The name of the factory's corresponding model.
      *
@@ -19,11 +18,10 @@ class CategoryFactory extends Factory
      *
      * @return array
      */
-    public function definition()
-    {
+    public function definition() {
         return [
-            'name' => $this->faker->sentence(),
-            'description' => $this->faker->text(),
+            'name'        => $this->faker->word(),
+            'description' => $this->faker->paragraph( 1 ),
         ];
     }
 }
