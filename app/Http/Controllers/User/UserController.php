@@ -3,28 +3,22 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
-{
+class UserController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function index() {
+        $user = User::all();
+        return response()->json( [
+            'message' => 'Diplay a list of all Users',
+            'data'    => $user,
+        ], 200 );
     }
 
     /**
@@ -33,9 +27,27 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store( Request $request ) {
+        $validated = $request->validate( [
+            'name'     => 'required|max:255',
+            'email'    => 'required|unique:users|max:255',
+            'password' => 'required|confirmed|max:255',
+        ] );
+
+        $data                       = $request->all();
+        $data['name']               = $request->name;
+        $data['email']              = $request->email;
+        $data['password']           = Hash::make( $request->password );
+        $data['varified']           = User::UNVARIFIED_USER;
+        $data['varification_token'] = User::generateVerificationCode();
+        $data['admin']              = User::REGULAR_USER;
+
+        $user = User::create( $data );
+        return response()->json( [
+            'success' => true,
+            'message' => 'Your Data is insert Successfully',
+            'data'    => $user,
+        ], 201 );
     }
 
     /**
@@ -44,20 +56,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+    public function show( User $user ) {
+        return response()->json( [
+            'message' => 'Diplay single User',
+            'data'    => $user,
+        ], 200 );
     }
 
     /**
@@ -67,9 +70,56 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update( Request $request, $id ) {
+
+        // $user = User::findOrFail( $id );
+
+        // $validated = $request->validate( [
+        //     'email'    => 'required|unique:users,email' . $user->id,
+        //     'password' => 'required|confirmed|max:255',
+        //     'admin'    => 'in:' . User::ADMIN_USER . User::REGULAR_USER,
+        // ] );
+
+        // if ( $request->has( 'name' ) ) {
+        //     $user->name = $request->name;
+        // }
+
+        // if ( $request->has( 'email' ) && $user->email != $request->email ) {
+        //     $user->varified           = User::UNVARIFIED_USER;
+        //     $user->varification_token = User::generateVerificationCode();
+        //     $user->email              = $request->email;
+        // }
+
+        // if ( $request->has( 'password' ) ) {
+        //     $user->password = Hash::make( $request->password );
+        // }
+
+        // if ( $request->has( 'admin' ) ) {
+
+        //     if ( ! $user->isVarified() ) {
+        //         return response()->json( [
+        //             'error' => 'Only Varified User can modify the admin field',
+        //             'code'  => 409,
+        //         ], 409 );
+        //     }
+
+        //     $user->admin = $request->admin;
+        // }
+
+        // if ( ! $user->isDirty() ) {
+        //     return response()->json( [
+        //         'error' => 'You need to specify a different value to update',
+        //         'code'  => 422,
+        //     ], 422 );
+        // }
+
+        // $user->save();
+
+        // return response()->json( [
+        //     'message' => 'Your data is successfully updated !',
+        //     'data'    => $user,
+        // ], 200 );
+
     }
 
     /**
@@ -78,8 +128,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy( $id ) {
+        $user = User::findOrFail( $id );
+        $user->delete();
+        return response()->json( [
+            'message' => 'Your data is successfully deleted !',
+            'data'    => $user,
+        ], 200 );
     }
+
 }
