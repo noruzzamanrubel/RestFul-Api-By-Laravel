@@ -27,8 +27,8 @@ class UserFactory extends Factory {
             'password'           => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token'     => Str::random( 10 ),
             'verified'           => $this->faker->randomElement( [User::VARIFIED_USER, User::UNVARIFIED_USER] ),
-            'varification_token' => User::VARIFIED_USER ? null : User::generateVerificationCode(),
-            'admin'              => $this->faker->randomElement( User::ADMIN_USER, User::REGULAR_USER ),
+            // 'varification_token' => User::VARIFIED_USER ? null : User::generateVerificationCode(),
+            // 'admin'              => $this->faker->randomElement( User::ADMIN_USER, User::REGULAR_USER ),
         ];
     }
 
