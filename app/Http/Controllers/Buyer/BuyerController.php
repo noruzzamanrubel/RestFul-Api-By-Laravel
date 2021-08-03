@@ -16,7 +16,10 @@ class BuyerController extends Controller
     public function index()
     {
         $buyers = Buyer::has( 'transactions' )->get();
-        return $this->showAll( $buyers );
+        return response()->json( [
+            'message' => 'All Buyers list Here',
+            'data'    => $buyers,
+        ], 200 );
     }
 
     /**
@@ -28,6 +31,9 @@ class BuyerController extends Controller
     public function show( $id )
     {
         $buyer = Buyer::has( 'transactions' )->findOrfail( $id );
-        return $this->showOne( $buyer );
+        return response()->json( [
+            'message' => 'A single buyer list here',
+            'data'    => $buyer,
+        ], 200 );
     }
 }

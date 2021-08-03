@@ -15,7 +15,10 @@ class SellerController extends Controller
     public function index()
     {
         $sellers = Seller::has( 'products' )->get();
-        return $this->showAll( $sellers );
+        return response()->json( [
+            'message' => 'All Sellers list Here',
+            'data'    => $sellers,
+        ], 200 );
     }
 
     /**
@@ -27,7 +30,10 @@ class SellerController extends Controller
     public function show( $id )
     {
         $seller = Seller::has( 'products' )->findOrfail( $id );
-        return $this->showOne( $seller );
+        return response()->json( [
+            'message' => 'A single buyer list here',
+            'data'    => $seller,
+        ], 200 );
     }
 
 }
