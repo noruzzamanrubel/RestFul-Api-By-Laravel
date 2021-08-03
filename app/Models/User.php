@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable {
+class User extends Authenticatable
+{
 
     use HasFactory, Notifiable;
 
@@ -16,6 +17,9 @@ class User extends Authenticatable {
     const ADMIN_USER   = 'true';
     const REGULAR_USER = 'false';
 
+    /**
+     * @var string
+     */
     protected $table = 'users';
 
     /**
@@ -57,7 +61,8 @@ class User extends Authenticatable {
      *
      * @return void
      */
-    public function isVarified() {
+    public function isVarified()
+    {
         return $this->varified == User::VARIFIED_USER;
     }
 
@@ -66,7 +71,8 @@ class User extends Authenticatable {
      *
      * @return void
      */
-    public function isAdmin() {
+    public function isAdmin()
+    {
         return $this->admin == User::ADMIN_USER;
     }
 
@@ -75,7 +81,8 @@ class User extends Authenticatable {
      *
      * @return void
      */
-    public static function generateVerificationCode() {
+    public static function generateVerificationCode()
+    {
         return str_random( 40 );
     }
 
@@ -85,7 +92,8 @@ class User extends Authenticatable {
      * @param  mixed $name
      * @return void
      */
-    public function setNameAttribute( $name ) {
+    public function setNameAttribute( $name )
+    {
         $this->attributes['name'] = strtolower( $name );
     }
 
@@ -95,7 +103,8 @@ class User extends Authenticatable {
      * @param  mixed $name
      * @return void
      */
-    public function getNameAttribute( $name ) {
+    public function getNameAttribute( $name )
+    {
         return ucwords( $name );
     }
 
@@ -105,7 +114,8 @@ class User extends Authenticatable {
      * @param  mixed $email
      * @return void
      */
-    public function setEmailAttribute( $email ) {
+    public function setEmailAttribute( $email )
+    {
         $this->attributes['email'] = strtolower( $email );
     }
 }

@@ -7,13 +7,15 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends ApiController {
+class UserController extends ApiController
+{
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         $user = User::all();
         return $this->showAll( $user );
     }
@@ -24,7 +26,8 @@ class UserController extends ApiController {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store( Request $request ) {
+    public function store( Request $request )
+    {
         $validated = $request->validate( [
             'name'     => 'required|max:255',
             'email'    => 'required|unique:users|max:255',
@@ -49,7 +52,8 @@ class UserController extends ApiController {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show( User $user ) {
+    public function show( User $user )
+    {
         return $this->showOne( $user );
     }
 
@@ -60,7 +64,8 @@ class UserController extends ApiController {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update( Request $request, $id ) {
+    public function update( Request $request, $id )
+    {
 
         // $user = User::findOrFail( $id );
 
@@ -118,7 +123,8 @@ class UserController extends ApiController {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id ) {
+    public function destroy( $id )
+    {
 
         $user = User::findOrFail( $id );
         $user->delete();

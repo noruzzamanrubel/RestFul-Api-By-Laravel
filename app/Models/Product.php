@@ -5,13 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model {
+class Product extends Model
+{
 
     use HasFactory;
 
     const AVAILABLE_PRODUCT   = 'available';
     const UNAVAILABLE_PRODUCT = 'unavailable';
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'name',
         'description',
@@ -21,19 +25,35 @@ class Product extends Model {
         'seller_id',
     ];
 
-    public function isAvailable() {
+    /**
+     * @return mixed
+     */
+    public function isAvailable()
+    {
         return $this->status == Product::AVAILABLE_PRODUCT;
     }
 
-    public function categories() {
+    /**
+     * @return mixed
+     */
+    public function categories()
+    {
         return $this->belongsToMany( Category::class );
     }
 
-    public function seller() {
+    /**
+     * @return mixed
+     */
+    public function seller()
+    {
         return $this->belongsTo( Seller::class );
     }
 
-    public function transactions() {
+    /**
+     * @return mixed
+     */
+    public function transactions()
+    {
         return $this->hasMany( Transaction::class );
     }
 }
