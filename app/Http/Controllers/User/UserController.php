@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends ApiController
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,10 @@ class UserController extends ApiController
     public function index()
     {
         $user = User::all();
-        return $this->showAll( $user );
+        return response()->json( [
+            'message' => 'All User',
+            'data'    => $user,
+        ], 200 );
     }
 
     /**
@@ -43,7 +46,10 @@ class UserController extends ApiController
         $data['admin']              = User::REGULAR_USER;
 
         $user = User::create( $data );
-        return $this->showOne( $user, 201 );
+        return response()->json( [
+            'message' => 'user insert !',
+            'data'    => $user,
+        ], 201 );
     }
 
     /**
@@ -54,7 +60,10 @@ class UserController extends ApiController
      */
     public function show( User $user )
     {
-        return $this->showOne( $user );
+        return response()->json( [
+            'message' => 'Show a single user',
+            'data'    => $user,
+        ] );
     }
 
     /**
@@ -114,6 +123,21 @@ class UserController extends ApiController
         //     'message' => 'Your data is successfully updated !',
         //     'data'    => $user,
         // ], 200 );
+        $validated = $request->validate( [
+            'name'     => 'required',
+            'email'    => 'required',
+            'password' => 'required',
+        ] );
+
+        $data['name']     = $request->name;
+        $data['email']    = $request->email;
+        $data['password'] = Hash::make( $request->password );
+
+        $user = User::findOrfail( $id )->update( $data );
+        return response()->json( [
+            'message' => 'user updated !',
+            'data'    => $user,
+        ], 200 );
 
     }
 
@@ -128,7 +152,10 @@ class UserController extends ApiController
 
         $user = User::findOrFail( $id );
         $user->delete();
-        return $this->showOne( $user );
+        return response()->json( [
+            'message' => 'user deleted !',
+            'data'    => $user,
+        ], 200 );
 
     }
 

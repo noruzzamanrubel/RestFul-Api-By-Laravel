@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Seller;
 
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Controller;
 use App\Models\Seller;
 
-class SellerController extends ApiController
+class SellerController extends Controller
 {
     /**
      * Display a listing of the resource.

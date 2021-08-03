@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Category;
 
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CategoryController extends ApiController {
+class CategoryController extends Controller
+{
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         //
     }
 
@@ -20,7 +22,8 @@ class CategoryController extends ApiController {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         //
     }
 
@@ -30,7 +33,8 @@ class CategoryController extends ApiController {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store( Request $request ) {
+    public function store( Request $request )
+    {
         //
     }
 
@@ -40,7 +44,8 @@ class CategoryController extends ApiController {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show( $id ) {
+    public function show( $id )
+    {
         //
     }
 
@@ -50,7 +55,8 @@ class CategoryController extends ApiController {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit( $id ) {
+    public function edit( $id )
+    {
         //
     }
 
@@ -61,7 +67,8 @@ class CategoryController extends ApiController {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update( Request $request, $id ) {
+    public function update( Request $request, $id )
+    {
         //
     }
 
@@ -71,7 +78,8 @@ class CategoryController extends ApiController {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id ) {
+    public function destroy( $id )
+    {
         //
     }
 }
