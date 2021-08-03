@@ -52,26 +52,59 @@ class User extends Authenticatable {
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * User varified
+     *
+     * @return void
+     */
     public function isVarified() {
         return $this->varified == User::VARIFIED_USER;
     }
 
+    /**
+     * Admin Varified
+     *
+     * @return void
+     */
     public function isAdmin() {
         return $this->admin == User::ADMIN_USER;
     }
 
+    /**
+     * Random Varification code
+     *
+     * @return void
+     */
     public static function generateVerificationCode() {
         return str_random( 40 );
     }
 
+    /**
+     * mutator function add for name field
+     *
+     * @param  mixed $name
+     * @return void
+     */
     public function setNameAttribute( $name ) {
         $this->attributes['name'] = strtolower( $name );
     }
 
+    /**
+     * accessor function add for name field
+     *
+     * @param  mixed $name
+     * @return void
+     */
     public function getNameAttribute( $name ) {
         return ucwords( $name );
     }
 
+    /**
+     * mutator function add email field
+     *
+     * @param  mixed $email
+     * @return void
+     */
     public function setEmailAttribute( $email ) {
         $this->attributes['email'] = strtolower( $email );
     }

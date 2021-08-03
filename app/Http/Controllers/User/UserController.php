@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller {
+class UserController extends ApiController {
     /**
      * Display a listing of the resource.
      *
@@ -15,10 +15,7 @@ class UserController extends Controller {
      */
     public function index() {
         $user = User::all();
-        return response()->json( [
-            'message' => 'Diplay a list of all Users',
-            'data'    => $user,
-        ], 200 );
+        return $this->showAll( $user );
     }
 
     /**
@@ -43,11 +40,7 @@ class UserController extends Controller {
         $data['admin']              = User::REGULAR_USER;
 
         $user = User::create( $data );
-        return response()->json( [
-            'success' => true,
-            'message' => 'Your Data is insert Successfully',
-            'data'    => $user,
-        ], 201 );
+        return $this->showOne( $user, 201 );
     }
 
     /**
@@ -57,10 +50,7 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show( User $user ) {
-        return response()->json( [
-            'message' => 'Diplay single User',
-            'data'    => $user,
-        ], 200 );
+        return $this->showOne( $user );
     }
 
     /**
@@ -129,12 +119,11 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy( $id ) {
+
         $user = User::findOrFail( $id );
         $user->delete();
-        return response()->json( [
-            'message' => 'Your data is successfully deleted !',
-            'data'    => $user,
-        ], 200 );
+        return $this->showOne( $user );
+
     }
 
 }
