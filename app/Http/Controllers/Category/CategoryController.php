@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -14,17 +16,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $category = Category::all();
+        return response()->json( [
+            'message' => 'All Category Show Here',
+            'data'    => $category,
+        ] );
     }
 
     /**
@@ -33,9 +29,20 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store( Request $request )
+    public function store( CategoryRequest $request )
     {
-        //
+        $request->validated();
+
+        $data                = $request->all();
+        $data['name']        = $request->name;
+        $data['description'] = $request->description;
+
+        $category = Category::create( $data );
+
+        return response()->json( [
+            'message' => 'Category Insert Successfully',
+            'data'    => $category,
+        ], 200 );
     }
 
     /**
@@ -44,20 +51,12 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show( $id )
+    public function show( Category $category )
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit( $id )
-    {
-        //
+        return response()->json( [
+            'message' => 'Single Category Show Here',
+            'data'    => $category,
+        ] );
     }
 
     /**
@@ -67,9 +66,19 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update( Request $request, $id )
+    public function update( CategoryRequest $request, Category $category )
     {
-        //
+        $request->validated();
+
+        $category->update( [
+            'name'        => $request->name,
+            'description' => $request->description,
+        ] );
+
+        return response()->json( [
+            'message' => 'Category Updated Successfully',
+            'data'    => $category,
+        ] );
     }
 
     /**
@@ -78,8 +87,13 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id )
+    public function destroy( Category $category )
     {
-        //
+        $category->delete();
+        return response()->json( [
+            'message' => 'Single Category Deleted Successfully',
+            'data'    => $category,
+        ] );
     }
+
 }
