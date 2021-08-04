@@ -44,7 +44,7 @@ class CategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.unique' => 'This name already exists',
+            'name.required' => 'This name field required',
         ];
     }
 }

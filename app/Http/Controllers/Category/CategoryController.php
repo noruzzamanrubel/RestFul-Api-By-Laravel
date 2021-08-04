@@ -31,7 +31,6 @@ class CategoryController extends Controller
      */
     public function store( CategoryRequest $request )
     {
-        $request->validated();
 
         $data                = $request->all();
         $data['name']        = $request->name;
@@ -68,7 +67,6 @@ class CategoryController extends Controller
      */
     public function update( CategoryRequest $request, Category $category )
     {
-        $request->validated();
 
         $category->update( [
             'name'        => $request->name,
