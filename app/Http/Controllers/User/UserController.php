@@ -73,7 +73,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update( Request $request, $id )
+    public function update( Request $request, User $user )
     {
 
         // $user = User::findOrFail( $id );
@@ -123,17 +123,19 @@ class UserController extends Controller
         //     'message' => 'Your data is successfully updated !',
         //     'data'    => $user,
         // ], 200 );
+        
         $validated = $request->validate( [
             'name'     => 'required',
             'email'    => 'required',
             'password' => 'required',
         ] );
 
-        $data['name']     = $request->name;
-        $data['email']    = $request->email;
-        $data['password'] = Hash::make( $request->password );
+        $user->update( [
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => Hash::make( $request->password ),
+        ] );
 
-        $user = User::findOrfail( $id )->update( $data );
         return response()->json( [
             'message' => 'user updated !',
             'data'    => $user,
@@ -147,13 +149,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id )
+    public function destroy( User $user )
     {
-
-        $user = User::findOrFail( $id );
         $user->delete();
         return response()->json( [
-            'message' => 'user deleted !',
+            'message' => 'user deleted Successfully!',
             'data'    => $user,
         ], 200 );
 
