@@ -47,7 +47,7 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  Category $category
      * @return \Illuminate\Http\Response
      */
     public function show( Category $category )
@@ -62,7 +62,7 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $category
      * @return \Illuminate\Http\Response
      */
     public function update( CategoryRequest $request, Category $category )
@@ -82,7 +82,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $category
      * @return \Illuminate\Http\Response
      */
     public function destroy( Category $category )
