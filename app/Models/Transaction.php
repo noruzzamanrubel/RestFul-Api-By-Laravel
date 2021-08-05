@@ -21,7 +21,7 @@ class Transaction extends Model
     /**
      * @return mixed
      */
-    public function buyers()
+    public function buyer()
     {
         return $this->belongsTo( Buyer::class );
     }

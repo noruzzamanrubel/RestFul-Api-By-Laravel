@@ -12,7 +12,7 @@ class Seller extends User
     /**
      * @return mixed
      */
-    public function products()
+    public function product()
     {
         return $this->hasMany( Product::class );
     }
