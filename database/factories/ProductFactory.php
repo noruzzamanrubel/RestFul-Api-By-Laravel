@@ -2,11 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ProductFactory extends Factory {
+class ProductFactory extends Factory
+{
     /**
      * The name of the factory's corresponding model.
      *
@@ -19,7 +21,8 @@ class ProductFactory extends Factory {
      *
      * @return array
      */
-    public function definition() {
+    public function definition()
+    {
         return [
             'name'        => $this->faker->word(),
             'description' => $this->faker->paragraph( 1 ),
@@ -27,6 +30,7 @@ class ProductFactory extends Factory {
             'status'      => $this->faker->randomElement( [Product::AVAILABLE_PRODUCT, Product::UNAVAILABLE_PRODUCT] ),
             'image'       => $this->faker->randomElement( ['1.jpg', '2.jpg', '3.jpg'] ),
             'seller_id'   => User::all()->random()->id,
+            'category_id' => Category::all()->random()->id,
         ];
     }
 }

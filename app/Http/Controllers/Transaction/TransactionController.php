@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Transaction;
 
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -14,7 +15,11 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $transaction = Transaction::all();
+        return response()->json( [
+            'message' => 'All Sellers list Here',
+            'data'    => $transaction,
+        ], 200 );
     }
 
     /**
@@ -44,9 +49,12 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show( $id )
+    public function show( Transaction $transaction )
     {
-        //
+        return response()->json( [
+            'message' => 'All Sellers list Here',
+            'data'    => $transaction,
+        ], 200 );
     }
 
     /**

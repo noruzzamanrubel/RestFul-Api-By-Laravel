@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration {
             $table->string( 'status' )->default( Product::UNAVAILABLE_PRODUCT );
             $table->string( 'image' );
             $table->foreignId('seller_id');
+            $table->foreignId('category_id');
             $table->timestamps();
 
         } );
