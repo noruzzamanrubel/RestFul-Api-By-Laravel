@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Buyer;
 use App\Http\Controllers\Controller;
 use App\Models\Buyer;
 
-class BuyerTransactionController extends Controller
+class BuyerSellerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,11 @@ class BuyerTransactionController extends Controller
      */
     public function index( Buyer $buyer )
     {
-        $transactions = $buyer->transactions;
+        $sellers = $buyer->transactions()->with( 'product.seller' )->get()->pluck('product.seller')->unique('id')->values();
         return response()->json( [
-            'message' => 'single Buyers with transaction list Here',
-            'data'    => $transactions,
+            'message' => 'single Buyers with Seller list Here',
+            'data'    => $sellers,
         ], 200 );
     }
+
 }

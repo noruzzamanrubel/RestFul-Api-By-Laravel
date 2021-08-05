@@ -21,8 +21,16 @@ class Category extends Model
     /**
      * @return mixed
      */
-    public function products()
+    public function product()
     {
-        return $this->belongsToMany( Product::class );
+        return $this->belongsTo( Product::class );
+    }
+
+    /**
+     * @return mixed
+     */
+    public function transactions()
+    {
+        return $this->hasMany( Transaction::class );
     }
 }

@@ -29,8 +29,9 @@ class Transaction extends Model
     /**
      * @return mixed
      */
-    public function products()
+    public function product()
     {
         return $this->belongsTo( Product::class );
     }
+
 }
