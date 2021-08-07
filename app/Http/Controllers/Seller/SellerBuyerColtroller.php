@@ -15,7 +15,7 @@ class SellerBuyerColtroller extends Controller
     public function index( Seller $seller )
     {
         $buyers = $seller
-            ->products()
+            ->product()
             ->whereHas( 'transactions' )
             ->with( 'transactions.buyer' )
             ->get()

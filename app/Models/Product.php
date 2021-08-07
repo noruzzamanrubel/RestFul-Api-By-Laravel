@@ -37,7 +37,7 @@ class Product extends Model
     /**
      * @return mixed
      */
-    public function categories()
+    public function category()
     {
         return $this->belongsTo( Category::class );
     }

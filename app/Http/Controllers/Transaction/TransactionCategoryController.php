@@ -14,9 +14,15 @@ class TransactionCategoryController extends Controller
      */
     public function index( Transaction $transaction )
     {
-        $categories = $transaction->categories;
+        $categories = $transaction
+            ->product
+            ->with( 'category' )
+            ->get()
+            ->pluck( 'category' )
+            ->unique( 'id' )
+            ->values();
         return response()->json( [
-            'message' => 'single Buyers transaction list Here',
+            'message' => 'transaction category list Here',
             'data'    => $categories,
         ], 200 );
     }
