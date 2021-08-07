@@ -10,8 +10,9 @@ use App\Http\Controllers\Seller\SellerBuyerColtroller;
 use App\Http\Controllers\Seller\SellerController;
 use App\Http\Controllers\Seller\SellerProductColtroller;
 use App\Http\Controllers\Seller\SellerTransactionColtroller;
-use App\Http\Controllers\Transaction\TransactionCategoryController;
+use App\Http\Controllers\Transaction\TransactionBuyerController;
 use App\Http\Controllers\Transaction\TransactionController;
+use App\Http\Controllers\Transaction\TransactionProductController;
 use App\Http\Controllers\Transaction\TransactionSellerController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -63,7 +64,8 @@ Route::resource( 'sellers.products', SellerProductColtroller::class )->only( ['i
 
 Route::resource( 'transactions', TransactionController::class )->only( ['index', 'show'] );
 Route::resource( 'transactions.sellers', TransactionSellerController::class )->only( ['index'] );
-Route::resource( 'transactions.categories', TransactionCategoryController::class )->only( ['index'] );
+Route::resource( 'transactions.products', TransactionProductController::class )->only( ['index'] );
+Route::resource( 'transactions.buyers', TransactionBuyerController::class )->only( ['index'] );
 
 /**
  * Categorys
