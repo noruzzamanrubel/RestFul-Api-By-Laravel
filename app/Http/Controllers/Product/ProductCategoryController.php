@@ -17,10 +17,7 @@ class ProductCategoryController extends Controller
     public function index( Product $product )
     {
         $categories = $product->category;
-        return response()->json( [
-            'message' => 'Product with category list here',
-            'data'    => $categories,
-        ] );
+        return response()->json($categories);
     }
 
     /**
