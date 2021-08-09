@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
 
     use HasFactory, Notifiable;
@@ -44,7 +47,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        // 'varification_token',
+        'varification_token',
     ];
 
     /**
@@ -77,13 +80,36 @@ class User extends Authenticatable
     }
 
     /**
-     * Random Varification code
-     *
-     * @return void
+     * Generates a 6 digit random code and saves to user column.
+     * @return int|mixed
      */
-    public static function generateVerificationCode()
+    public function generateVerificationCode()
     {
-        return str_random( 40 );
+        $this->varification_token = mt_rand( 100000, 999999 );
+        $this->save();
+
+        return $this->varification_token;
+    }
+
+    /**
+     * Mark user account email verified.
+     */
+    public function markEmailAsVerified()
+    {
+        $this->email_verified_at  = Carbon::now();
+        $this->varification_token = null;
+        $this->save();
+    }
+
+    /**
+     * Change user password.
+     *
+     * @param $password
+     */
+    public function changePassword( $password )
+    {
+        $this->password = Hash::make( $password );
+        $this->save();
     }
 
     /**
@@ -117,5 +143,27 @@ class User extends Authenticatable
     public function setEmailAttribute( $email )
     {
         $this->attributes['email'] = strtolower( $email );
+    }
+
+    // Rest omitted for brevity
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

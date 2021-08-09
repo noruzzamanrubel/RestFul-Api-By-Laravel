@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Buyer\BuyerController;
 use App\Http\Controllers\Buyer\BuyerProductController;
 use App\Http\Controllers\Buyer\BuyerSellerController;
@@ -36,6 +37,20 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/user-profile', [AuthController::class, 'userProfile']); 
+    Route::DELETE('/delete/{id}', [AuthController::class, 'delete']); 
+});
+
 /**
  * Buyers
  */
@@ -63,7 +78,7 @@ Route::resource( 'products', ProductController::class )->only( ['index', 'show']
 Route::resource( 'products.buyers', ProductBuyerController::class )->only( ['index'] );
 Route::resource( 'products.sellers', ProductSellerController::class )->only( ['index'] );
 Route::resource( 'products.transactions', ProductTransactionController::class )->only( ['index'] );
-Route::resource( 'products.categories', ProductCategoryController::class )->except( ['create', 'edit', 'store','show'] );
+Route::resource( 'products.categories', ProductCategoryController::class )->except( ['create', 'edit', 'store', 'show'] );
 
 /**
  * Sellers
