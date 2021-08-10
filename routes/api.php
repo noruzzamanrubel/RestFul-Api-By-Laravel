@@ -24,6 +24,9 @@ use App\Http\Controllers\Transaction\TransactionController;
 use App\Http\Controllers\Transaction\TransactionProductController;
 use App\Http\Controllers\Transaction\TransactionSellerController;
 use App\Http\Controllers\User\UserController;
+use App\Mail\SendMarkdownMail;
+use App\Mail\SendTestMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,19 +40,25 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-
-Route::group([
+Route::group( [
     'middleware' => 'api',
-    'prefix' => 'auth'
+    'prefix'     => 'auth',
 
-], function ($router) {
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']); 
-    Route::DELETE('/delete/{id}', [AuthController::class, 'delete']); 
-});
+], function ( $router ) {
+    Route::post( '/login', [AuthController::class, 'login'] );
+    Route::post( '/register', [AuthController::class, 'register'] );
+    Route::post( '/logout', [AuthController::class, 'logout'] );
+    Route::post( '/refresh', [AuthController::class, 'refresh'] );
+    Route::get( '/user-profile', [AuthController::class, 'userProfile'] );
+    Route::DELETE( '/delete/{id}', [AuthController::class, 'delete'] );
+} );
+
+Route::get( '/mail', function () {
+
+    Mail::to( 'r@gmail.com' )->send( new SendMarkdownMail() );
+
+    echo 'Mail Sent successfully';
+} );
 
 /**
  * Buyers
