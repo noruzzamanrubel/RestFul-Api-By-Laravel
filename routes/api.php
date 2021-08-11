@@ -25,6 +25,7 @@ use App\Http\Controllers\Transaction\TransactionProductController;
 use App\Http\Controllers\Transaction\TransactionSellerController;
 use App\Http\Controllers\User\UserController;
 use App\Jobs\SendTestJob;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,8 +59,10 @@ Route::get( '/mail', function () {
     // } )->delay( now()->addSeconds( 5 ) );
 
     // dispatch( new SendTestJob() )->delay( now()->addSeconds( 5 ) );
-    
-    SendTestJob::dispatch()->delay( now()->addSeconds( 5 ) );
+
+    $user = User::findOrFail( 120 );
+
+    SendTestJob::dispatch($user)->delay( now()->addSeconds( 5 ) );
 
     echo 'Mail Sent successfully';
 } );

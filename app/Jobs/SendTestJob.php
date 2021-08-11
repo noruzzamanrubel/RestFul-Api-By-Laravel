@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Mail\SendMarkdownMail;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -14,14 +15,16 @@ class SendTestJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $user;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $user)
     {
-        //
+        $this->user = $user;
     }
 
     /**
@@ -31,6 +34,6 @@ class SendTestJob implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to( 'r@gmail.com' )->send( new SendMarkdownMail() );
+        Mail::to( $this->user )->send( new SendMarkdownMail($this->user) );
     }
 }

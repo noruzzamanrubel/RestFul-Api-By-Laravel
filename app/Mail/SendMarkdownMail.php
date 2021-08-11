@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -13,16 +14,16 @@ class SendMarkdownMail extends Mailable
     /**
      * @var mixed
      */
-    public $name;
+    public $user;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct( User $user )
     {
-        $this->name = "Rubel Ahmed";
+        $this->user = $user;
     }
 
     /**
