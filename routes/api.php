@@ -24,8 +24,7 @@ use App\Http\Controllers\Transaction\TransactionController;
 use App\Http\Controllers\Transaction\TransactionProductController;
 use App\Http\Controllers\Transaction\TransactionSellerController;
 use App\Http\Controllers\User\UserController;
-use App\Mail\SendMarkdownMail;
-use Illuminate\Support\Facades\Mail;
+use App\Jobs\SendTestJob;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -54,9 +53,13 @@ Route::group( [
 
 Route::get( '/mail', function () {
 
-    dispatch( function () {
-        Mail::to( 'r@gmail.com' )->send( new SendMarkdownMail() );
-    } )->delay( now()->addSeconds( 5 ) );
+    // dispatch( function () {
+    //     Mail::to( 'r@gmail.com' )->send( new SendMarkdownMail() );
+    // } )->delay( now()->addSeconds( 5 ) );
+
+    // dispatch( new SendTestJob() )->delay( now()->addSeconds( 5 ) );
+    
+    SendTestJob::dispatch()->delay( now()->addSeconds( 5 ) );
 
     echo 'Mail Sent successfully';
 } );
