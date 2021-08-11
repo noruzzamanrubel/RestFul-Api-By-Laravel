@@ -25,7 +25,6 @@ use App\Http\Controllers\Transaction\TransactionProductController;
 use App\Http\Controllers\Transaction\TransactionSellerController;
 use App\Http\Controllers\User\UserController;
 use App\Mail\SendMarkdownMail;
-use App\Mail\SendTestMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -55,7 +54,9 @@ Route::group( [
 
 Route::get( '/mail', function () {
 
-    Mail::to( 'r@gmail.com' )->send( new SendMarkdownMail() );
+    dispatch( function () {
+        Mail::to( 'r@gmail.com' )->send( new SendMarkdownMail() );
+    } )->delay( now()->addSeconds( 5 ) );
 
     echo 'Mail Sent successfully';
 } );
