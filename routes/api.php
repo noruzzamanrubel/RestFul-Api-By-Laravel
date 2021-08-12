@@ -60,11 +60,11 @@ Route::get( '/mail', function () {
 
     // dispatch( new SendTestJob() )->delay( now()->addSeconds( 5 ) );
 
-    $user = User::findOrFail( 120 );
+    $user = User::inRandomOrder()->first();
 
-    SendTestJob::dispatch($user)->delay( now()->addSeconds( 5 ) );
+    SendTestJob::dispatch( $user )->delay( now()->addSeconds( 5 ) );
 
-    echo 'Mail Sent successfully';
+    echo $user->name;
 } );
 
 /**
