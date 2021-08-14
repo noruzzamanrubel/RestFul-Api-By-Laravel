@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\SomeOneCheckedProfile;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Buyer\BuyerController;
 use App\Http\Controllers\Buyer\BuyerProductController;
@@ -65,6 +66,15 @@ Route::get( '/mail', function () {
     SendTestJob::dispatch( $user )->delay( now()->addSeconds( 5 ) );
 
     echo $user->name;
+} );
+
+Route::get( '/profilecheck', function () {
+
+    $user = User::inRandomOrder()->first();
+
+    SomeOneCheckedProfile::dispatch( $user );
+
+    echo $user->name . 'Your Profile Checked';
 } );
 
 /**
