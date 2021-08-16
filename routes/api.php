@@ -125,7 +125,7 @@ Route::resource( 'transactions.products', TransactionProductController::class )-
 Route::resource( 'transactions.buyers', TransactionBuyerController::class )->only( ['index'] );
 
 /**
- * Categorys
+ * Users
  */
 
 Route::resource( 'users', UserController::class )->except( ['create', 'edit'] );
