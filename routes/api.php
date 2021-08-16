@@ -54,13 +54,7 @@ Route::group( [
 } );
 
 Route::get( '/mail', function () {
-
-    // dispatch( function () {
-    //     Mail::to( 'r@gmail.com' )->send( new SendMarkdownMail() );
-    // } )->delay( now()->addSeconds( 5 ) );
-
-    // dispatch( new SendTestJob() )->delay( now()->addSeconds( 5 ) );
-
+    
     $user = User::inRandomOrder()->first();
 
     SendTestJob::dispatch( $user )->delay( now()->addSeconds( 5 ) );
